@@ -1,4 +1,5 @@
 typedef struct flor{
+    char nome[11];
     float sepalaLargura;
     float sepalaAltura;
     float petalaLargura;
@@ -16,3 +17,6 @@ void gravarCSV(float matrizEuq[150][150], float matrizNor[150][150], int matrizA
 void printaMatriz(float matriz[150][150]);
 void printFlor(Flor a);
 void lerPersistencia(int matrizAdj[150][150], char *s);
+void DFS (int matriz[150][150], int inicial, int vetMarcado[150]);
+void printGrupos(int vet[150]);
+double acuracia(int *grpA, int *grpB, Flor *flor);

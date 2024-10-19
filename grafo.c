@@ -2,8 +2,9 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
+#include <string.h>
 
-Flor * lerCSV( char *fileName){
+Flor * lerCSV(char *fileName){
     FILE *f = fopen(fileName, "r");
     if (!f){
         printf("Erro ao abrir o arquivo\n");
@@ -12,7 +13,7 @@ Flor * lerCSV( char *fileName){
     
     Flor *vet = malloc(sizeof(Flor) * 150);
     float a,b,c,d;
-    char p[50];
+    char p[11];
     int i = 0;
     char lixo[100];
     fscanf(f, "%[^\n]", lixo);
@@ -21,6 +22,7 @@ Flor * lerCSV( char *fileName){
         vet[i].sepalaLargura = b;
         vet[i].petalaAltura = c;
         vet[i].petalaLargura = d;
+        strcpy(vet[i].nome, p);
         i++;
     }
     fclose(f);
@@ -184,4 +186,38 @@ void lerPersistencia(int matrizAdj[150][150], char *s){
         matrizAdj[a][b] = 1;
     }
 
+}
+
+void DFS (int matriz[150][150], int inicial, int vetMarcado[150]){
+    vetMarcado[inicial] = 1;
+    for (int i = 0; i < 150; i++){
+         if (matriz[inicial][i] == 1 && vetMarcado[i] == 0){
+            DFS(matriz, i, vetMarcado);
+         }
+    }
+}
+
+void printGrupos(int vet[150]){
+    for(int i = 0; i < 150; i++) {
+        printf("%i: %i\n", i, vet[i]);
+    }
+    printf("\n");
+}
+
+double acuracia(int *grpA, int *grpB, Flor *flor){
+    double tp, fp, fn, tn;
+    tp = fp = fn = tn = 0;
+    for (int i = 0; i < 150; i++){
+        if (grpA[i] == 1 && strcmp(flor[i].nome, "Setosa") == 0){
+            tp++;
+        }else if(grpA[i] == 1 && strcmp(flor[i].nome, "Setosa") != 0){
+            fp++;
+        }
+        if(grpB[i] == 1 && strcmp(flor[i].nome, "Setosa") == 0){
+            fn++;
+        }else if(grpB[i] == 1 && strcmp(flor[i].nome, "Setosa") != 0){
+            tn++;
+        }
+    }
+    return (tn+tp)/(tp+fp+fn+tn);
 }
