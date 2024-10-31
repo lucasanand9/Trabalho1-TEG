@@ -6,6 +6,8 @@
     float matrizEuclidiana[150][150];
     float matrizNormal[150][150];
     int matrizAdjacente[150][150];
+    int grupoA[150];
+    int grupoB[150];
     int subGrupos[150][150];
 
 int main(int argc, char *argv[]){
@@ -38,10 +40,42 @@ int main(int argc, char *argv[]){
             } 
             if (vdd){
                 qtdSubGrpos++;
-                 DFS(matrizAdjacente, i, subGrupos[qtdSubGrpos-1]);
+                DFS(matrizAdjacente, i, subGrupos[qtdSubGrpos-1]);
             }
         }
     }
+
+    int maiores[150];
+
+    for (int i = 0; i < 150; i++){      
+        maiores[i] = 0; 
+        for (int j = 0; j < 150; j++){
+            if (subGrupos[i][j] == 1){
+                maiores[i]++;
+            }
+        }
+    }
+
+    int indice1, indice2;
+    indice1 = indice2 = -1;
+    int maior1, maior2;
+    maior1 = maior2 = -2147483648;
+    for (int i = 0; i < 150; i++){
+        if (maiores[i] > maior1){
+            maior2 = maior1;
+            maior1 = maiores[i];
+            indice1 = indice2;
+            indice1 = i;
+        }else if(maiores[i] > maior2 && maiores[i] != maior1){
+            maior2 = maiores[i];
+            indice2 = i;
+        }
+    }
+
+    //fazer a media dos dois vetores
+    
+    
+    
     
 
 
