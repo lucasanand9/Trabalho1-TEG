@@ -204,10 +204,11 @@ void printGrupos(int vet[150]){
     printf("\n");
 }
 
-double acuracia(int *grpA, int *grpB, Flor *flor){
+double acuracia(int *grpA, int *grpB, int tamA, int tamB,Flor *flor){
     double tp, fp, fn, tn;
     tp = fp = fn = tn = 0;
-    for (int i = 0; i < 150; i++){
+    if (tamA < tamB){
+        for (int i = 0; i < 150; i++){
         if (grpA[i] == 1 && strcmp(flor[i].nome, "Setosa") == 0){
             tp++;
         }else if(grpA[i] == 1 && strcmp(flor[i].nome, "Setosa") != 0){
@@ -218,6 +219,34 @@ double acuracia(int *grpA, int *grpB, Flor *flor){
         }else if(grpB[i] == 1 && strcmp(flor[i].nome, "Setosa") != 0){
             tn++;
         }
+        }
+        return (tn+tp)/(tp+fp+fn+tn);
+    }else{
+        for (int i = 0; i < 150; i++){
+        if (grpB[i] == 1 && strcmp(flor[i].nome, "Setosa") == 0){
+            tp++;
+        }else if(grpB[i] == 1 && strcmp(flor[i].nome, "Setosa") != 0){
+            fp++;
+        }
+        if(grpA[i] == 1 && strcmp(flor[i].nome, "Setosa") == 0){
+            fn++;
+        }else if(grpA[i] == 1 && strcmp(flor[i].nome, "Setosa") != 0){
+            tn++;
+        }
+        }
+        return (tn+tp)/(tp+fp+fn+tn);
     }
-    return (tn+tp)/(tp+fp+fn+tn);
+    
+    
+}
+
+float distanciaEucInd(Flor *flor1, Flor *flor2){
+    float distSA, distSL, distPA, distPL; //SA = Sepala Altura, PL = Petala Largura
+
+    distSA = flor1->sepalaAltura - flor2->sepalaAltura;
+    distSL = flor1->sepalaLargura - flor2->sepalaLargura;
+    distPA = flor1->petalaAltura - flor2->petalaAltura;
+    distPL = flor1->petalaLargura - flor2->petalaLargura;
+
+    return (float)sqrt(pow(distSA,2) + pow(distSL,2) + pow(distPA,2) + pow(distPL,2));
 }

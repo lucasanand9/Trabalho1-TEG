@@ -19,4 +19,5 @@ void printFlor(Flor a);
 void lerPersistencia(int matrizAdj[150][150], char *s);
 void DFS (int matriz[150][150], int inicial, int vetMarcado[150]);
 void printGrupos(int vet[150]);
-double acuracia(int *grpA, int *grpB, Flor *flor);
+double acuracia(int *grpA, int *grpB, int tamA, int tamB,Flor *flor);
+float distanciaEucInd(Flor *flor1, Flor *flor2);
